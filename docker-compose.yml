@@ -1,0 +1,33 @@
+# sudo rm -Rf dev/mysql
+# sudo mkdir -p dev/mysql
+# sudo chown 1001:1001 dev/mysql
+# docker exec -it search-v2_mysql_1 mysql -u root -p
+version: "2"
+services:
+  mysql:
+    image: mysql:8.0.22
+    ports:
+      - 3306:3306
+    volumes:
+      - ./dev/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ccart
+    command:
+      [
+        "--default-authentication-plugin=mysql_native_password",
+        "--federated",
+        "--sort_buffer_size=512K",
+      ]
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_VERBOSES: local
+      #PMA_HOSTS: crm-v2_mysql_1
+      #PMA_PORTS: 3306
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
