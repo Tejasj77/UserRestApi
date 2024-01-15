@@ -80,10 +80,10 @@ PORT=8000
 MYSQL_DB_PASSWORD=root
 ```
 
-- Create database crm
+- Create database mydb
 
 ```bash
-CREATE DATABASE crm;
+CREATE DATABASE mydb;
 ```
 
 - Running the project in development mode
