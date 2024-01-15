@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 let MYSQL_DB_PORT = parseInt(process.env.MYSQL_DB_PORT!) || 3306;
-let MYSQL_DB_DATABASE = process.env.MYSQL_DB_DATABASE || "mydb";
+let MYSQL_DB_DATABASE = process.env.MYSQL_DB_DATABASE || "crm";
 let MYSQL_DB_HOSTNAME = "localhost";
 let MYSQL_DB_USER = "root";
 
