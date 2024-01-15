@@ -3,7 +3,7 @@ import { app } from "./../../src/app";
 import { Db } from "./../../src/models/db";
 import { IDbUtils } from "./../../src/config/mysql";
 import request from "supertest";
-import * as uuid from "uuid";
+
 const PORT = 3789;
 
 let dbInst: IDbUtils | null;
@@ -35,7 +35,6 @@ describe("Users Controller", () => {
       .expect("Content-Type", /json/);
     expect(resp.body).toEqual({
       message: "success",
-      // statusCode: 200,
       users: [],
     });
   });
@@ -49,7 +48,6 @@ describe("Users Controller", () => {
       })
       .expect("Content-Type", /json/);
     expect(resp.body).toMatchObject({
-      statusCode: 201,
       user: [
         {
           username: "Testing new user",
@@ -64,7 +62,6 @@ describe("Users Controller", () => {
       .get(`/api/users/${sharedData[0].id}`)
       .expect("Content-Type", /json/);
     expect(resp.body).toEqual({
-      statusCode: 200,
       message: "success",
       user: [
         {
@@ -86,7 +83,6 @@ describe("Users Controller", () => {
       })
       .expect("Content-Type", /json/);
     expect(resp.body).toEqual({
-      statusCode: 200,
       message: "success",
       user: [
         {
@@ -99,19 +95,14 @@ describe("Users Controller", () => {
     });
   });
   test("delete user", async () => {
-    const resp = await request(app)
-      .delete(`/api/users/${sharedData[0].id}`)
-      .expect("Content-Type", /json/);
-    expect(resp.body).toEqual({
-      statusCode: 204,
-      message: "User is found and deleted",
-    });
+    const resp = await request(app).delete(`/api/users/${sharedData[0].id}`);
+    expect(resp.statusCode).toBe(204);
   });
   test("get deleted user", async () => {
     console.log({ sharedData });
     const resp = await request(app)
       .get(`/api/users/${sharedData[0].id}`)
       .expect("Content-Type", /json/);
-    expect(resp.body).toEqual({ statusCode: 404, message: "User not found" });
+    expect(resp.body).toEqual({ message: "User not found" });
   });
 });

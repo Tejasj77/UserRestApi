@@ -82,7 +82,7 @@ async function deleteUserData(req: Request, res: Response) {
   try {
     const row = await Db.users.deleteUser(userId);
     if (!row) res.status(404).send({ message: "User does not exist" });
-    res.status(204).send({ message: "User is found and deleted" });
+    res.status(204).send();
   } catch (e) {
     res.status(404).send({ message: "User does not exist" });
   }
